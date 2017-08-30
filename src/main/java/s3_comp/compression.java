@@ -29,9 +29,9 @@ import javax.imageio.stream.ImageOutputStream;
 
 public class compression implements RequestHandler<S3Event, String> {
 	
-	private static Regions region=Regions.US_EAST_2;
+	private static Regions region=Regions.YOUR_REGION;
     private AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
-    //AmazonS3 s3clientkem = new AmazonS3Client(new ProfileCredentialsProvider());
+    ;
     private final String JPG_TYPE = (String) "jpg";
     private final String JPG_MIME = (String) "image/jpeg";
     private final String PNG_TYPE = (String) "png";
@@ -66,20 +66,16 @@ public class compression implements RequestHandler<S3Event, String> {
 			
 			S3ObjectInputStream objectContent = response.getObjectContent();
            BufferedImage image = ImageIO.read(objectContent);
-		      /*String dir = "tmp";
-		      String k = "compress.jpg";
-		      File compressedImageFile = new File(dir,k);
-		      compressedImageFile.createNewFile();*/
+		      
 		     
 		      Iterator<ImageWriter>writers =  ImageIO.getImageWritersByFormatName("jpg");
 		      ImageWriter writer = (ImageWriter) writers.next();
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://vishal.czetolypzqqv.us-east-2.rds.amazonaws.com:3306/test_db","root","rootroot");
+			con = DriverManager.getConnection("CONNECTION_TO_YOUR_RDS");
 			Statement s = con.createStatement();
 			i = s.executeUpdate(qn);
 			context.getLogger().log("ahia sudhi thai gayu");
 			
-			// OutputStream os =new FileOutputStream(compressedImageFile);
 			
 			
             
@@ -118,7 +114,7 @@ public class compression implements RequestHandler<S3Event, String> {
 
 	             // Uploading to S3 destination bucket
 	             //.out.println("Writing to: " + dstBucket + "/" + dstKey);
-	             s3.putObject("compre2", key, is1, meta);
+	             s3.putObject("BUCKETNAME", key, is1, meta);
 		     // s3client.putObject(new PutObjectRequest("compre2", key, compressedImageFile));
 		      
 			
